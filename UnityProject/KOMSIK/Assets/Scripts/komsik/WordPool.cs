@@ -18,8 +18,13 @@ namespace KOMSIK
 
             WordStateOrigins[0] = new WordStateOrigin("", 0, 0, 0, 0);
             WordStateOrigins[1] = new WordStateOrigin("ここは", 3, 0, 10, 1);
+            WordStateOrigins[1].Effects.Add(new NormalAtkAndDef());
+
             WordStateOrigins[2] = new WordStateOrigin("俺に任せて", 3, 0, 30, 2);
-            WordStateOrigins[3] = new WordStateOrigin("先に行け", 3, 10, 0, 1);
+            WordStateOrigins[2].Effects.Add(new NormalAtkAndDef());
+
+            WordStateOrigins[3] = new WordStateOrigin("先に行け", 3, 20, 0, 1);
+            WordStateOrigins[3].Effects.Add(new NormalAtkAndDef());
 
             // 初期デッキとカスタムデッキを構築.
             OriginDecks = new WordStateOrigin[5][];

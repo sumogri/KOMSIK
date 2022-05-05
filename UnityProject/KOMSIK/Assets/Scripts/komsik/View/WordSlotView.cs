@@ -8,6 +8,8 @@ namespace KOMSIK
 {
     public class WordSlotView : MonoBehaviour
     {
+        public WordState Model => targetModel;
+
         [SerializeField] private GameObject detail1ViewRoot;
         [SerializeField] private TMP_Text word;
         [SerializeField] private TMP_Text hp;
@@ -16,6 +18,7 @@ namespace KOMSIK
         [SerializeField] private GameObject attackIcon;
         [SerializeField] private GameObject deffenceIcon;
         [SerializeField] private GameObject highlightRoot;
+        [SerializeField] private GameObject highlightRoot2;
 
         private WordState targetModel;
 
@@ -99,6 +102,15 @@ namespace KOMSIK
         public void SetDetailActivate(bool activate)
         {
             detail1ViewRoot.SetActive(activate);
+        }
+
+        public void SetHighilightActivate(bool activate)
+        {
+            highlightRoot.SetActive(activate);
+        }
+        public void SetHighilightActivate2(bool activate)
+        {
+            highlightRoot2.SetActive(activate);
         }
     }
 }

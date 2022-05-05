@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace KOMSIK
         public int MaxTurn => maxTurn.Value;
         public Section NowSection => nowSection.Value;
         public GamePhase NowGamePhase => nowGamePhase.Value;
+        public IObservable<GamePhase> OnChangeGamePhase => nowGamePhase;
 
         private ReactiveProperty<int> customPoint = new ReactiveProperty<int>();
         private ReactiveProperty<int> nowTurn = new ReactiveProperty<int>();
@@ -47,6 +49,12 @@ namespace KOMSIK
             Title,
             Game,
             End,
+        }
+
+        public void OnTurnEnd()
+        {
+            nowTurn.Value++;
+            customPoint.Value += 3; //てきとう.1ターンごとのカスタムポイント増加.
         }
 
         public enum GamePhase

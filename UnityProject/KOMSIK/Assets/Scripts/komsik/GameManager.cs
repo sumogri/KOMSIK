@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
+using Cysharp.Threading.Tasks;
 
 namespace KOMSIK
 {
@@ -59,8 +61,20 @@ namespace KOMSIK
 
         public void BattleStart()
         {
-            GameSystem.BattleStart();
+            GameSystem.SetupBattle();
+        }
 
+        public void BattleWordDo()
+        {
+            GameSystem.BattleTopWordDo();
+        }
+
+        public async UniTask BattleRun()
+        {
+            while (GameSystem.BattleTopWordDo())
+            {
+                await UniTask.Delay(500);
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ namespace KOMSIK
         public int Attack { get; }
         public int Diffence { get; }
         public int CustomCost { get; }
+        public List<IWordEffect> Effects { get; } = new List<IWordEffect>();
 
         public WordStateOrigin(string word,int hp,int attack,int diffence,int customCost)
         {

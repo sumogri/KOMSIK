@@ -1,0 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace KOMSIK
+{
+    /// <summary>
+    /// ê®óÕ
+    /// </summary>
+    public enum Power
+    {
+        None, //Ç«ÇøÇÁÇ≈Ç‡Ç»Ç¢
+        Own, //ñ°ï˚ë§
+        Enemy, //ìGë§
+    }
+}
