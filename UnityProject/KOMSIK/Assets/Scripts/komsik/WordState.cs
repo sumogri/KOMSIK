@@ -17,6 +17,7 @@ namespace KOMSIK
         public string Word => word.Value;
         public Power Power { get; set; }
         public List<IWordEffect> Effects => effects;
+        public bool IsBlank => isBlank;
 
         public IObservable<int> OnChangeHP => hp;
         public IObservable<int> OnChangeAttack => attack;
@@ -28,6 +29,8 @@ namespace KOMSIK
         private ReactiveProperty<int> deffence = new ReactiveProperty<int>();
         private ReactiveProperty<string> word = new ReactiveProperty<string>();
         private List<IWordEffect> effects = new List<IWordEffect>();
+
+        private bool isBlank = true;
 
         public WordState()
         {
@@ -44,15 +47,35 @@ namespace KOMSIK
             this.deffence.Value = deffence;
             this.word.Value = word;
             this.Power = power;
+            this.isBlank = false;
         }
 
         public void Damaged(int subHP)
         {
             hp.Value -= subHP;
+
+            if(hp.Value <= 0)
+            {
+                Dead();
+            }
+        }
+
+        public void Dead()
+        {
+            this.hp.Value = 0;
+            this.attack.Value = 0;
+            this.deffence.Value = 0;
+            this.word.Value = "";
+            this.isBlank = true;
         }
 
         public void DoEffects(GameSystem gameSystem)
         {
+            if (isBlank)
+            {
+                return;
+            }
+
             for (var i = 0; i < effects.Count; i++)
             {
                 effects[i].DoEffect(this, gameSystem);
@@ -66,6 +89,7 @@ namespace KOMSIK
             deffence.Value = origin.Diffence;
             word.Value = origin.Word;
             effects = origin.Effects;
+            isBlank = false;
         }
     }
 }

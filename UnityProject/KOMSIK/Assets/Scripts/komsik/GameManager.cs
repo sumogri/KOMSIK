@@ -26,6 +26,9 @@ namespace KOMSIK
         private void Awake()
         {
             GameSystem = new GameSystem();
+            GameSystem.OnSetupBattle
+                .Subscribe(x => _ = BattleRun())
+                .AddTo(gameObject);
         }
 
 
@@ -71,10 +74,7 @@ namespace KOMSIK
 
         public async UniTask BattleRun()
         {
-            while (GameSystem.BattleTopWordDo())
-            {
-                await UniTask.Delay(500);
-            }
+            _ = GameSystem.BattleRun();
         }
     }
 }

@@ -14,6 +14,8 @@ namespace KOMSIK
         public Section NowSection => nowSection.Value;
         public GamePhase NowGamePhase => nowGamePhase.Value;
         public IObservable<GamePhase> OnChangeGamePhase => nowGamePhase;
+        public IObservable<int> OnCustomPointChange => customPoint;
+        public IObservable<Section> OnChangeGameSection => nowSection;
 
         private ReactiveProperty<int> customPoint = new ReactiveProperty<int>();
         private ReactiveProperty<int> nowTurn = new ReactiveProperty<int>();
@@ -34,6 +36,14 @@ namespace KOMSIK
             this.phaseIterateTime.Value = 0;
         }
 
+        public void InitOnBattle(int maxTurn, int customPoin)
+        {
+            this.maxTurn.Value = 10;
+            this.customPoint.Value = 3;
+            this.nowGamePhase.Value = GamePhase.None;
+            this.phaseIterateTime.Value = 0;
+        }
+
         public void ChangeSection(Section changeTo)
         {
             nowSection.Value = changeTo;
@@ -48,13 +58,19 @@ namespace KOMSIK
         {
             Title,
             Game,
-            End,
+            BadEnd,
+            GoodEnd,
         }
 
         public void OnTurnEnd()
         {
             nowTurn.Value++;
             customPoint.Value += 3; //てきとう.1ターンごとのカスタムポイント増加.
+        }
+
+        public void PaidCustomPoint(int paidPoint)
+        {
+            customPoint.Value = Mathf.Max(0,CustomPoint-paidPoint);
         }
 
         public enum GamePhase

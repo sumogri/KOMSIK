@@ -9,6 +9,7 @@ namespace KOMSIK
     public class CharacterStatusView : MonoBehaviour
     {
         [SerializeField] private TMP_Text hpText;
+        [SerializeField] private TMP_Text defText;
 
         private CharacterState targetModel;
 
@@ -18,6 +19,10 @@ namespace KOMSIK
 
             targetModel.OnChangeHP
                 .Subscribe(OnChangeHP)
+                .AddTo(gameObject);
+
+            targetModel.OnChangeDiffence
+                .Subscribe(OnChangeDef)
                 .AddTo(gameObject);
         }
 
@@ -30,6 +35,17 @@ namespace KOMSIK
             }
 
             hpText.text = $"{changeTo}";
+        }
+
+        private void OnChangeDef(int changeTo)
+        {
+            // •‰‚É‚Í‚µ‚È‚¢.
+            if (changeTo < 0)
+            {
+                changeTo = 0;
+            }
+
+            defText.text = $"{changeTo}";
         }
     }
 }

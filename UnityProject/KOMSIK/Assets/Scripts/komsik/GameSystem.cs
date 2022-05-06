@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 namespace KOMSIK
 {
@@ -33,6 +34,8 @@ namespace KOMSIK
 
         #region event
         public IObservable<WordState> OnWordDoEffect => onDoEffectWordSubject;
+        public IObservable<Unit> OnSetupBattle => onSetupBattleSubject;
+        public IObservable<BattleResult> OnBattleEnd => onButtleEndSubject;
         #endregion
 
         private ReactiveProperty<GameState> gameState = new ReactiveProperty<GameState>(new GameState());
@@ -45,12 +48,23 @@ namespace KOMSIK
         private WordState[] ownChosenWordStateChache = null;
         private WordState[] enemyChosenWordStateChache = null;
         private Subject<WordState> onDoEffectWordSubject = new Subject<WordState>();
+        private Subject<Unit> onSetupBattleSubject = new Subject<Unit>();
+        private Subject<BattleResult> onButtleEndSubject = new Subject<BattleResult>();
 
         private PowerState ownPower;
         private PowerState enemeyPower;
 
         public GameSystem()
         {
+            ///やれたら : キャラDBから初期キャラ選択.
+            ownState.Value = new CharacterState(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
+            enemyState.Value = new CharacterState(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));
+
+            // 勢力情報詰め直し,
+            /// Systemのフィールドにしてしまったので、参照を代入. 今後なにか勢力単位で足す必要あるものはこれに.
+            ownPower = new PowerState(OwnDeck, OwnState, ownChosenWordStateChache, Power.Own);
+            enemeyPower = new PowerState(EnemyDeck, EnemyState, enemyChosenWordStateChache, Power.Enemy);
+
             this.Init();
         }
 
@@ -87,30 +101,39 @@ namespace KOMSIK
         /// </summary>
         public void Init()
         {
+            Debug.Log("Call Init");
             gameState.Value.Init(10,3);
 
-            ///やれたら : キャラDBから初期キャラ選択.
-            ownState.Value = new CharacterState(100,1,Power.Own);
-            enemyState.Value = new CharacterState(9999,0,Power.Enemy);
+            /// 味方初期化.
+            SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
 
-            //敵のデック初期化.固定.
+            //敵の初期化.
+            enemyState.Value.InitFromOring(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));
             enemyWordDeck.SetDeckFromCharacter(enemyState.Value);
-            ownWordDeck.SetDeckFromCharacter(ownState.Value);
+        }
 
-            // 勢力情報詰め直し,
-            /// Systemのフィールドにしてしまったので、参照を代入. 今後なにか勢力単位で足す必要あるものはこれに.
-            ownPower = new PowerState(OwnDeck, OwnState, ownChosenWordStateChache, Power.Own);
-            enemeyPower = new PowerState(EnemyDeck, EnemyState, enemyChosenWordStateChache, Power.Enemy);
+        public void Continue()
+        {
+            gameState.Value.InitOnBattle(10, 3);
+
+            /// 味方初期化.
+            SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
+
+            //敵の初期化.
+            enemyState.Value.InitFromOring(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));
+            enemyWordDeck.SetDeckFromCharacter(enemyState.Value);
+
+            GameStart();
         }
 
         /// <summary>
         /// キャラ選
         /// </summary>
         /// <param name="ownState"></param>
-        public void SelectOwnCharacter(CharacterState ownState)
+        public void SelectOwnCharacter(CharacterOrigin origin)
         {
-            this.ownState.Value = ownState;
-            ownWordDeck.SetDeckFromCharacter(ownState);
+            ownState.Value.InitFromOring(origin);
+            ownWordDeck.SetDeckFromCharacter(ownState.Value);
         }
 
         /// <summary>
@@ -128,6 +151,7 @@ namespace KOMSIK
         {
             gameState.Value.ChangeSection(GameState.Section.Game);
             gameState.Value.ChangeGamePhase(GameState.GamePhase.PreTalk);
+            CustomStart(); //仮.イベント終わりで呼ぶ.
         }
 
         /// <summary>
@@ -152,6 +176,7 @@ namespace KOMSIK
             }
 
             gameState.Value.ChangeGamePhase(GameState.GamePhase.Battle);
+            onSetupBattleSubject.OnNext(Unit.Default);
         }
 
         /// <summary>
@@ -170,6 +195,46 @@ namespace KOMSIK
 
             Debug.Log("BattleTopWordDo");
             return true;
+        }
+
+        public async UniTask BattleRun()
+        {
+            // てきとう.演出待ち
+            await UniTask.Delay(500);
+
+            while (BattleTopWordDo())
+            {
+                // てきとう.演出待ち.
+                await UniTask.Delay(500);
+
+                //ゲームオーバー判定.
+                if (CheckAndDoBattleEnd())
+                {
+                    // ゲームオーバーしてたらバトル処理打ち切り.
+                    return;
+                }
+            }
+
+            //ひととおりカード消費したのでターン終了.
+            TurnEnd();
+
+            //カスタムに移動.
+            CustomStart();
+        }
+
+        /// <summary>
+        /// ゲームオーバー/クリア判定.
+        /// </summary>
+        /// <returns>終了条件を満たしたか</returns>
+        public bool CheckAndDoBattleEnd()
+        {
+            if(EnemyState.HP <= 0 || OwnState.HP <= 0)
+            {
+                BattleEnd();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -206,11 +271,33 @@ namespace KOMSIK
             if(ownState.Value?.HP <= 0)
             {
                 gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkBad);
+                gameState.Value.ChangeSection(GameState.Section.BadEnd); //仮.演出終わりに入れる.
             }
             else
             {
                 gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkGood);
             }
+        }
+
+        /// <summary>
+        /// デッキにWordOriginを刺す.
+        /// </summary>
+        /// <param name="wordState"></param>
+        /// <param name="wordStateOrigin"></param>
+        /// <returns>成功ならtrue</returns>
+        public bool CustomSetWordOrigin(WordState wordState, WordStateOrigin wordStateOrigin)
+        {
+            var cost = wordStateOrigin.CustomCost;
+            if(GameState.CustomPoint < cost)
+            {
+                Debug.Log($"CP Over cp:{GameState.CustomPoint},cost:{cost}");
+                return false;
+            }
+
+            // originをwordにset,Cost支払い.
+            wordState.SetFromOrigin(wordStateOrigin);
+            GameState.PaidCustomPoint(cost);
+            return true;
         }
     }
 }

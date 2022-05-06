@@ -14,17 +14,36 @@ namespace KOMSIK
         public int Diffence => diffence.Value;
 
         public IObservable<int> OnChangeHP => hp;
+        public IObservable<int> OnChangeDiffence => diffence;
 
         private ReactiveProperty<int> hp = new ReactiveProperty<int>();
         private int customDeckID = 0;
         private Power power = Power.None;
         private ReactiveProperty<int> diffence = new ReactiveProperty<int>();
 
+        public CharacterState()
+        {
+
+        }
+
         public CharacterState(int hp,int customDeckID,Power power)
         {
             this.hp.Value = hp;
             this.customDeckID = customDeckID;
             this.power = power;
+            this.diffence.Value = 0;
+        }
+
+        public CharacterState(CharacterOrigin origin)
+        {
+            InitFromOring(origin);
+        }
+
+        public void InitFromOring(CharacterOrigin origin)
+        {
+            this.hp.Value = origin.HP;
+            this.customDeckID = origin.CustomDeckID;
+            this.power = origin.Power;
             this.diffence.Value = 0;
         }
 

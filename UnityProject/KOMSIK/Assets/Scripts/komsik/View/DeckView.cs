@@ -87,6 +87,7 @@ namespace KOMSIK
             foreach(var view in wordSlotViews)
             {
                 view.SetHighilightActivate(false);
+                view.SetHighilightActivate2(false);
             }
         }
 

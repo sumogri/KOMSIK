@@ -42,6 +42,7 @@ namespace KOMSIK
         private void OnCustomPhaseStart()
         {
             transform.DOLocalMove(customPosition, 0.5f);
+            doingBattle = false;
         }
 
         private void OnGamePhaseStart()
