@@ -55,12 +55,6 @@ namespace KOMSIK
         }
         #endregion
 
-        public void Start()
-        {
-            view.DoSubscribe(new WordState());
-            SetWordOrigin(WordPool.WordStateOrigins[2]);
-        }
-
         private void OnDropToReciever(WordReciever wordReciever)
         {
             if (wordReciever == null)
@@ -73,6 +67,11 @@ namespace KOMSIK
 
         public void SetWordOrigin(WordStateOrigin origin)
         {
+            if(view.Model == null)
+            {
+                view.DoSubscribe(new WordState());
+            }
+
             wordStateOrigin = origin;
             cpNumText.text = $"{origin.CustomCost}";
             view.Model.SetFromOrigin(origin);

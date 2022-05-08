@@ -16,6 +16,7 @@ namespace KOMSIK
         public IObservable<GamePhase> OnChangeGamePhase => nowGamePhase;
         public IObservable<int> OnCustomPointChange => customPoint;
         public IObservable<Section> OnChangeGameSection => nowSection;
+        public int PhaseIterateTime => phaseIterateTime.Value;
 
         private ReactiveProperty<int> customPoint = new ReactiveProperty<int>();
         private ReactiveProperty<int> nowTurn = new ReactiveProperty<int>();
@@ -62,10 +63,20 @@ namespace KOMSIK
             GoodEnd,
         }
 
+        public void AddCustomPoint(int adder)
+        {
+            customPoint.Value += adder;
+        }
+
         public void OnTurnEnd()
         {
             nowTurn.Value++;
             customPoint.Value += 3; //てきとう.1ターンごとのカスタムポイント増加.
+        }
+
+        public void OnPhaseEnd()
+        {
+            phaseIterateTime.Value++;
         }
 
         public void PaidCustomPoint(int paidPoint)

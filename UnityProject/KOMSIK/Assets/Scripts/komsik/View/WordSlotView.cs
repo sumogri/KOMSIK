@@ -77,7 +77,7 @@ namespace KOMSIK
             var text = "";
             if(attackVissible && deffenceVissible)
             {
-                text = $"<color=red >{atk}</color>/<color=blue>{def}</color>";
+                text = $"<color=red>{atk}</color>/<color=blue>{def}</color>";
             }
             else if (attackVissible)
             {

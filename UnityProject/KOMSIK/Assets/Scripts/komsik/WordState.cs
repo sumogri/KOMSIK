@@ -76,9 +76,15 @@ namespace KOMSIK
                 return;
             }
 
+            var minePower = gameSystem.GetMinePower(this.Power);
+            var multiple = minePower.CharacterState.PopNextWordEffectOccuerMultiple();
+
             for (var i = 0; i < effects.Count; i++)
             {
-                effects[i].DoEffect(this, gameSystem);
+                for(var j = 0; j < multiple; j++)
+                {
+                    effects[i].DoEffect(this, gameSystem);
+                }
             }
         }
 
@@ -90,6 +96,18 @@ namespace KOMSIK
             word.Value = origin.Word;
             effects = origin.Effects;
             isBlank = false;
+        }
+
+        public string GetDetailStr()
+        {
+            var s = "";
+
+            foreach(var e in effects)
+            {
+                s += e.DetailStr(this) + "\n";
+            }
+
+            return s;
         }
     }
 }

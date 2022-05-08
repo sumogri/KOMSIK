@@ -11,11 +11,25 @@ namespace KOMSIK
         [SerializeField] private WordProvider[] wordProvider;
         private bool detailActive = false;
 
+        public void Start()
+        {
+            DoSubscribe(GameManager.GameSystem);
+        }
+
+        public void DoSubscribe(GameSystem system)
+        {
+            system.OwnState.OnChangeCustomDeckID
+                .Subscribe(_ => SetStateByCharacter(system.OwnState))
+                .AddTo(gameObject);
+        }
+
         public void SetStateByCharacter(CharacterState characterState)
         {
             var cd = WordPool.CustomDecks[characterState.CustomDeckID];
+            Debug.Log(cd.Length);
             for(var i = 0; i < cd.Length; i++)
             {
+                Debug.Log(cd[i].Word);
                 wordProvider[i].SetWordOrigin(cd[i]);
             }
         }

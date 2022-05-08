@@ -16,10 +16,10 @@ namespace KOMSIK
         static CharacterOrigin()
         {
             CharacterOrigins[0] = new CharacterOrigin("魔王",1000,0,Power.Enemy);
-            CharacterOrigins[1] = new CharacterOrigin("グラン", 100, 1, Power.Own);
-            CharacterOrigins[2] = new CharacterOrigin("スカイ", 100, 2, Power.Own);
-            CharacterOrigins[3] = new CharacterOrigin("シィ", 100, 3, Power.Own);
-            CharacterOrigins[4] = new CharacterOrigin("ユーシャ", 100, 4, Power.Own);
+            CharacterOrigins[1] = new CharacterOrigin("グラン", 300, 1, Power.Own);
+            CharacterOrigins[2] = new CharacterOrigin("スカイ", 200, 2, Power.Own);
+            CharacterOrigins[3] = new CharacterOrigin("シィ", 200, 3, Power.Own);
+            CharacterOrigins[4] = new CharacterOrigin("ユーシャ", 300, 4, Power.Own);
         }
 
         public static CharacterOrigin GetOrigin(CharacterID id)

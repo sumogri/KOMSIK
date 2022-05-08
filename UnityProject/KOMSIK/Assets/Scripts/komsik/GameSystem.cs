@@ -44,7 +44,7 @@ namespace KOMSIK
 
         private WordDeck ownWordDeck = new WordDeck();
         private WordDeck enemyWordDeck = new WordDeck();
-        private Queue<WordState> battleWordQueue = new Queue<WordState>();
+        private Stack<WordState> battleWordStack = new Stack<WordState>();
         private WordState[] ownChosenWordStateChache = null;
         private WordState[] enemyChosenWordStateChache = null;
         private Subject<WordState> onDoEffectWordSubject = new Subject<WordState>();
@@ -103,9 +103,11 @@ namespace KOMSIK
         {
             Debug.Log("Call Init");
             gameState.Value.Init(10,3);
+            //gameState.Value.Init(10, 9);
 
             /// 味方初期化.
             SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
+            //SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Sea));
 
             //敵の初期化.
             enemyState.Value.InitFromOring(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));
@@ -161,18 +163,18 @@ namespace KOMSIK
         {
             Debug.Log("BattleStart");
 
-            battleWordQueue.Clear();
+            battleWordStack.Clear();
             /// デッキあみだくじ
             ownChosenWordStateChache = ownWordDeck.ChoseBattleWordSet();
             ownPower.SetChosenChache(ownChosenWordStateChache); //結果をキャッシュ.
             enemyChosenWordStateChache= enemyWordDeck.ChoseBattleWordSet();
             enemeyPower.SetChosenChache(enemyChosenWordStateChache); //結果をキャッシュ.
 
-            ///自分=>相手=>自分...と処理スタックに積む.
-            for (int i = 0; i < ownChosenWordStateChache.Length; i++)
+            ///相手=>自分=>相手=>...と処理スタックに積む.
+            for (int i = ownChosenWordStateChache.Length - 1; i >= 0; i--)
             {
-                battleWordQueue.Enqueue(ownChosenWordStateChache[i]);
-                battleWordQueue.Enqueue(enemyChosenWordStateChache[i]);
+                battleWordStack.Push(enemyChosenWordStateChache[i]);
+                battleWordStack.Push(ownChosenWordStateChache[i]);
             }
 
             gameState.Value.ChangeGamePhase(GameState.GamePhase.Battle);
@@ -184,12 +186,12 @@ namespace KOMSIK
         /// </summary>
         public bool BattleTopWordDo()
         {
-            if(battleWordQueue.Count <= 0)
+            if(battleWordStack.Count <= 0)
             {
                 return false;
             }
 
-            var word = battleWordQueue.Dequeue();
+            var word = battleWordStack.Pop();
             onDoEffectWordSubject.OnNext(word);
             word.DoEffects(this);
 
@@ -243,6 +245,7 @@ namespace KOMSIK
         public void BattleCutinWord(WordState cutined)
         {
             Debug.Log("BattleCutinWord");
+            battleWordStack.Push(cutined);
         }
 
         public void TurnEnd()
@@ -250,6 +253,8 @@ namespace KOMSIK
             gameState.Value.OnTurnEnd();
             ownPower.CharacterState.OnTurnEnd();
             enemeyPower.CharacterState.OnTurnEnd();
+
+            battleWordStack.Clear();
         }
 
         /// <summary>
@@ -270,12 +275,36 @@ namespace KOMSIK
             /// 自分のHPが0以下なら、死んでるので負け.
             if(ownState.Value?.HP <= 0)
             {
-                gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkBad);
-                gameState.Value.ChangeSection(GameState.Section.BadEnd); //仮.演出終わりに入れる.
+                PhaseChangeToDefeate();
             }
             else
             {
                 gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkGood);
+            }
+        }
+
+        /// <summary>
+        /// 負けてフェーズを切り替える場合.
+        /// 
+        /// 次のキャラに交代.
+        /// </summary>
+        public void PhaseChangeToDefeate()
+        {
+            gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkBad);
+            gameState.Value.OnPhaseEnd();
+
+            // 4回まではキャラチェンで対応
+            if(GameState.PhaseIterateTime < 4)
+            {
+                var nextCharaID = CharacterOrigin.CharacterID.Gran + GameState.PhaseIterateTime;
+                SelectOwnCharacter(CharacterOrigin.GetOrigin(nextCharaID));
+                TurnEnd();
+
+                CustomStart(); //仮.演出待つ.
+            }
+            else
+            {
+                gameState.Value.ChangeSection(GameState.Section.BadEnd); //仮.演出終わりに入れる.
             }
         }
 

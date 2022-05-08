@@ -14,5 +14,7 @@ namespace KOMSIK
     public interface IWordEffect
     {
         public void DoEffect(WordState state, GameSystem gameSystem);
+
+        public string DetailStr(WordState state);
     }
 }

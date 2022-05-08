@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 1510715372345255243}
   - component: {fileID: 1510715372345255242}
   - component: {fileID: 522424268160269413}
+  - component: {fileID: 419575976750398329}
   m_Layer: 5
   m_Name: CardSrot
   m_TagString: Untagged
@@ -139,6 +140,18 @@ MonoBehaviour:
   deffenceIcon: {fileID: 1510715374164578027}
   highlightRoot: {fileID: 8335694031666592647}
   highlightRoot2: {fileID: 648157401425629592}
+--- !u!114 &419575976750398329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510715372345255240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade69234b8634704bad880e95fa30eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1510715372576252612
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,8 +456,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.6
-  m_fontSizeBase: 11.6
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

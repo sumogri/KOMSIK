@@ -27,7 +27,7 @@ namespace KOMSIK
         {
             GameSystem = new GameSystem();
             GameSystem.OnSetupBattle
-                .Subscribe(x => _ = BattleRun())
+                .Subscribe(x => BattleRun())
                 .AddTo(gameObject);
         }
 
@@ -72,7 +72,7 @@ namespace KOMSIK
             GameSystem.BattleTopWordDo();
         }
 
-        public async UniTask BattleRun()
+        public void BattleRun()
         {
             _ = GameSystem.BattleRun();
         }
