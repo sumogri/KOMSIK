@@ -70,8 +70,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1510715372946279200}
-  - {fileID: 8193323997509964267}
   - {fileID: 1953662331896785360}
+  - {fileID: 8193323997509964267}
   - {fileID: 4483439587064617317}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ade69234b8634704bad880e95fa30eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotView: {fileID: 522424268160269413}
+  side: 1
 --- !u!1 &1510715372576252612
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +165,7 @@ GameObject:
   - component: {fileID: 1510715372576252613}
   - component: {fileID: 1510715372576252615}
   - component: {fileID: 1510715372576252614}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -239,7 +241,7 @@ GameObject:
   - component: {fileID: 1510715372816602038}
   - component: {fileID: 1510715372816602040}
   - component: {fileID: 1510715372816602039}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -507,7 +509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1510715373320355669}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +549,7 @@ GameObject:
   - component: {fileID: 1510715373470588004}
   - component: {fileID: 1510715373470588006}
   - component: {fileID: 1510715373470588005}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -623,7 +625,7 @@ GameObject:
   - component: {fileID: 1510715373904059177}
   - component: {fileID: 1510715373904059179}
   - component: {fileID: 1510715373904059178}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: ATK_DEF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,7 +674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -756,7 +758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1510715374036486207}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: ATK_DEF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +799,7 @@ GameObject:
   - component: {fileID: 1510715374164578028}
   - component: {fileID: 1510715374164578030}
   - component: {fileID: 1510715374164578029}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -947,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8193323997509964267}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: DetailRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -969,7 +971,7 @@ RectTransform:
   - {fileID: 1510715374036486207}
   - {fileID: 1510715373320355669}
   m_Father: {fileID: 1510715372345255241}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1082,7 +1084,7 @@ RectTransform:
   m_Children:
   - {fileID: 3509849892346836971}
   m_Father: {fileID: 1510715372345255241}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

@@ -8,26 +8,19 @@ namespace KOMSIK
 {
     public class WordDetailPopuper : MonoBehaviour , IPointerEnterHandler,IPointerExitHandler
     {
+        [SerializeField] private WordSlotView slotView;
+        [SerializeField] private WordDetailView.Side side;
+
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("PointerEnter");
+            WordDetailView.Instance.OpenDetail(slotView.Model,side);
+            Debug.Log("Enter!");
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("PointerExit");
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            WordDetailView.Instance.CloseDetail(slotView.Model);
+            Debug.Log("Exit!");
         }
     }
 }
