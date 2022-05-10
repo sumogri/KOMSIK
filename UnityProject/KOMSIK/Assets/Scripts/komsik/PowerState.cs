@@ -10,10 +10,12 @@ namespace KOMSIK
         public CharacterState CharacterState => charState;
         public WordState[] ChosenWordStateChache => chosenWordStateChache;
         public Power Power => power;
+        public WordState CutinWordState => cutinWord;
 
         private WordDeck wordDeck;
         private CharacterState charState;
         private WordState[] chosenWordStateChache;
+        private WordState cutinWord;
         private Power power;
 
         public PowerState(
@@ -27,6 +29,8 @@ namespace KOMSIK
             this.charState = charState;
             this.chosenWordStateChache = chosenWordStateChache;
             this.power = power;
+            cutinWord = new WordState();
+            cutinWord.Power = power;
         }
 
         public void SetChosenChache(WordState[] chosenChache)

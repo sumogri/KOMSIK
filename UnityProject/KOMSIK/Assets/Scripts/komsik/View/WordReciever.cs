@@ -5,9 +5,13 @@ using UnityEngine.EventSystems;
 
 namespace KOMSIK
 {
+    /// <summary>
+    /// カスタム画面で単語をはめられるようWordSlotを拡張
+    /// </summary>
     public class WordReciever : MonoBehaviour
     {
         [SerializeField] private WordSlotView wordSlot;
+        private bool isAcseptActive = true;
 
         public void Start()
         {
@@ -16,8 +20,21 @@ namespace KOMSIK
 
         public void OnDrop(WordStateOrigin wordStateOrigin)
         {
+            if (!isAcseptActive)
+            {
+                return;
+            }
+
             // デッキカスタムのロジック呼び出し.
             GameManager.GameSystem.CustomSetWordOrigin(wordSlot.Model, wordStateOrigin);
+        }
+
+        /// <summary>
+        /// このRecieverが受理するか.
+        /// </summary>
+        public void SetAcseptActive(bool active)
+        {
+            isAcseptActive = active;
         }
     }
 }

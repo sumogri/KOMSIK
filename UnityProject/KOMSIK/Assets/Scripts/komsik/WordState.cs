@@ -23,12 +23,14 @@ namespace KOMSIK
         public IObservable<int> OnChangeAttack => attack;
         public IObservable<int> OnChangeDeffence => deffence;
         public IObservable<string> OnChangeWord => word;
+        public IObservable<WordStateOrigin> OnSetFromOrigin => onSetFromOrigin;
 
         private ReactiveProperty<int> hp = new ReactiveProperty<int>();
         private ReactiveProperty<int> attack = new ReactiveProperty<int>();
         private ReactiveProperty<int> deffence = new ReactiveProperty<int>();
         private ReactiveProperty<string> word = new ReactiveProperty<string>();
         private List<IWordEffect> effects = new List<IWordEffect>();
+        private Subject<WordStateOrigin> onSetFromOrigin = new Subject<WordStateOrigin>();
 
         private bool isBlank = true;
 
@@ -38,6 +40,15 @@ namespace KOMSIK
             this.attack.Value = 0;
             this.deffence.Value = 0;
             this.word.Value = "";
+        }
+
+        public void Init()
+        {
+            this.hp.Value = 0;
+            this.attack.Value = 0;
+            this.deffence.Value = 0;
+            this.word.Value = "";
+            this.effects = new List<IWordEffect>();
         }
 
         public WordState(int hp,int attack,int deffence,string word,Power power)
@@ -96,6 +107,7 @@ namespace KOMSIK
             word.Value = origin.Word;
             effects = origin.Effects;
             isBlank = false;
+            onSetFromOrigin.OnNext(origin);
         }
 
         public string GetDetailStr()
