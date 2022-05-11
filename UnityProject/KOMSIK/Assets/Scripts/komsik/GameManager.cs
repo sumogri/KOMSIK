@@ -36,7 +36,7 @@ namespace KOMSIK
         void Start()
         {
             Init();
-            GameStart(); // デバッグ.タイトル無視していきなりゲームへ.
+            //GameStart(); // デバッグ.タイトル無視していきなりゲームへ.
         }
 
         /// <summary>

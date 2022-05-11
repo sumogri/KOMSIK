@@ -57,6 +57,7 @@ namespace KOMSIK
 
         public enum Section
         {
+            PreMovie,
             Title,
             Game,
             BadEnd,
