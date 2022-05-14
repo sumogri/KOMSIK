@@ -8,6 +8,7 @@ public class TextPlayableAsset : PlayableAsset
     public Color startColor = Color.white;
     public Color endColor = Color.white;
     public ExposedReference<GameObject> charaObj;
+    public float fontSize = 0;
     // public string text;
 
     // Factory method that generates a playable based on this asset
@@ -18,6 +19,7 @@ public class TextPlayableAsset : PlayableAsset
         behaviour.Text = text;
         behaviour.StartColor = startColor;
         behaviour.EndColor = endColor;
+        behaviour.FontSize = fontSize;
 
         // behaviour.text = text;
         return ScriptPlayable<TextPlayableBehaviour>.Create(graph, behaviour);

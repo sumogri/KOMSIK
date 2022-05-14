@@ -9,6 +9,7 @@ public class TextPlayableBehaviour : PlayableBehaviour
     public string Text { get; set; }
     public Color StartColor { get; set; }
     public Color EndColor { get; set; }
+    public float FontSize { get; set; }
 
     // Called when the owning graph starts playing
     public override void OnGraphStart(Playable playable)
@@ -41,11 +42,16 @@ public class TextPlayableBehaviour : PlayableBehaviour
         if (charaObject == null) { return; }
         var percent = (float)playable.GetTime() / (float)playable.GetDuration();
 
-        this.charaObject.GetComponent<TMP_Text>().text =
+        var textConponent = this.charaObject.GetComponent<TMP_Text>();
+        textConponent.text =
             this.Text.Substring(0, (int)Mathf.Round(this.Text.Length * percent));
 
         var progress = (float)(playable.GetTime() / playable.GetDuration());
-        this.charaObject.GetComponent<TMP_Text>().color = Color.Lerp(StartColor, EndColor, progress);
+        textConponent.color = Color.Lerp(StartColor, EndColor, progress);
 
+        if(FontSize > 0)
+        {
+            textConponent.fontSize = FontSize; //É}Å[ÉWÇµÇ»Ç¢.
+        }
     }
 }
