@@ -17,7 +17,7 @@ namespace KOMSIK
 
         private void Update()
         {
-            text.text = $"{GameManager.GameSystem.GameState.NowSection}";
+            text.text = $"{GameManager.GameSystem.GameState.NowSection}/{GameManager.GameSystem.GameState.NowGamePhase}\niteCout:{GameManager.GameSystem.GameState.PhaseIterateTime}";
         }
     }
 }

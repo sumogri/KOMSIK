@@ -153,7 +153,7 @@ namespace KOMSIK
         {
             gameState.Value.ChangeSection(GameState.Section.Game);
             gameState.Value.ChangeGamePhase(GameState.GamePhase.PreTalk);
-            CustomStart(); //仮.イベント終わりで呼ぶ.
+            //CustomStart(); //仮.イベント終わりで呼ぶ.
         }
 
         /// <summary>

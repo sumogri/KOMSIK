@@ -32,7 +32,7 @@ namespace KOMSIK
         {
             this.maxTurn.Value = maxTurn;
             this.customPoint.Value = customPoint;
-            this.nowSection.Value = Section.Title;
+            this.nowSection.Value = Section.PreMovie;
             this.nowGamePhase.Value = GamePhase.None;
             this.phaseIterateTime.Value = 0;
         }
