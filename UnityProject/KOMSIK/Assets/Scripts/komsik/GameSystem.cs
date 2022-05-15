@@ -300,7 +300,7 @@ namespace KOMSIK
                 SelectOwnCharacter(CharacterOrigin.GetOrigin(nextCharaID));
                 TurnEnd();
 
-                CustomStart(); //‰¼.‰‰o‘Ò‚Â.
+                //CustomStart(); //‰¼.‰‰o‘Ò‚Â.
             }
             else
             {

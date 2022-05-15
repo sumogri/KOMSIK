@@ -21,7 +21,7 @@ namespace KOMSIK
         public void DoSubscribe(GameSystem gameSystem)
         {
             gameSystem.GameState.OnChangeGamePhase
-                .Do(x => Debug.Log(x))
+                .Do(x => Debug.Log($"{x} == {gamePhase} && {gameSystem.GameState.PhaseIterateTime} == {numOfPhase}"))
                 .Where(x => x == gamePhase && gameSystem.GameState.PhaseIterateTime == numOfPhase)
                 .Subscribe(_ => OnChangeGamePhase())
                 .AddTo(gameObject);
@@ -29,7 +29,7 @@ namespace KOMSIK
 
         private void OnChangeGamePhase()
         {
-            Debug.Log("DO");
+            Debug.Log($"{gameObject.name}");
             timeline.Play();
         }
     }

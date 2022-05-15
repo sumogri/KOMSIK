@@ -35,12 +35,14 @@ namespace KOMSIK
 
             target.GameState.OnChangeGamePhase
                 .Where(x => x == GameState.GamePhase.Custom)
-                .Subscribe(x => OnCustomPhaseStart())
+                .Subscribe(x => _ = OnCustomPhaseStart())
                 .AddTo(gameObject);
         }
 
-        private void OnCustomPhaseStart()
+        private async UniTask OnCustomPhaseStart()
         {
+            await UniTask.Delay(500);
+
             transform.DOLocalMove(customPosition, 0.5f);
             doingBattle = false;
         }
@@ -53,7 +55,7 @@ namespace KOMSIK
         // Start is called before the first frame update
         void Start()
         {
-            OnCustomPhaseStart();
+            _ = OnCustomPhaseStart();
             DoSubscribe(GameManager.GameSystem);
         }
 

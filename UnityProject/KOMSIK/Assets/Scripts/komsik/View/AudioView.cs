@@ -36,9 +36,15 @@ namespace KOMSIK
             bgmSource.loop = true;
         }
 
+        public void StopBGM()
+        {
+            bgmSource.Pause();
+        }
+
         public enum BGM 
         {
             Title,
+            Sky,
         }
     }
 }
