@@ -45,6 +45,7 @@ namespace KOMSIK
         {
             Title,
             Sky,
+            Sea,
         }
     }
 }

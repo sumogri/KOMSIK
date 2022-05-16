@@ -27,5 +27,9 @@ namespace KOMSIK
         {
             AudioView.Instance.PlayBGM(AudioView.BGM.Sky);
         }
+        public void BGMPlaySea()
+        {
+            AudioView.Instance.PlayBGM(AudioView.BGM.Sea);
+        }
     }
 }
