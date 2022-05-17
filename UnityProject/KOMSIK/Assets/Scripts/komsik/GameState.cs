@@ -17,6 +17,8 @@ namespace KOMSIK
         public IObservable<int> OnCustomPointChange => customPoint;
         public IObservable<Section> OnChangeGameSection => nowSection;
         public int PhaseIterateTime => phaseIterateTime.Value;
+        public IObservable<int> OnNowTurnValueChange => nowTurn;
+        public int LastTurn { get { return MaxTurn - NowTurn; } }
 
         private ReactiveProperty<int> customPoint = new ReactiveProperty<int>();
         private ReactiveProperty<int> nowTurn = new ReactiveProperty<int>();
