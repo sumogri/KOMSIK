@@ -39,6 +39,12 @@ namespace KOMSIK
 
         private void OnBattleStart(int iterateNum)
         {
+            if (iterateNum >= ownCharaRoots.Length)
+            {
+                Debug.LogWarning($"OnBattleStart iterate num Over {iterateNum} >= {ownCharaRoots.Length}");
+                return;
+            }
+
             uiRoot.SetActive(true);
             stageRoot.SetActive(true);
             cameraRoot.SetActive(true);

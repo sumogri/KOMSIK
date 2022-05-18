@@ -32,16 +32,12 @@ namespace KOMSIK
 
         public void DoSubscribe(GameSystem gameSystem)
         {
-            //‚â‚ß‚Ä‚à‚¢‚¢‚©?
-
             gameSystem.GameState.OnChangeGameSection
-                .Do(x => Debug.Log($"Here {x}"))
                 .Where(x => x != GameState.Section.GoodEnd)
                 .Subscribe(_ => OnInit())
                 .AddTo(gameObject);
 
             gameSystem.GameState.OnChangeGameSection
-                .Do(x => Debug.Log($"DODODO{x}"))
                 .Where(x => x == GameState.Section.GoodEnd)
                 .Subscribe(_ => OnGameOver())
                 .AddTo(gameObject);

@@ -256,12 +256,21 @@ namespace KOMSIK
             #endregion
 
             //—EŽÒ
-            /// ‰¼.
             for (int i = 0; i < 9; i++)
             {
-                OriginDecks[4][i] = WordStateOrigins[2];
-                CustomDecks[4][i] = WordStateOrigins[2];
+                CustomDecks[4][i] = WordStateOrigins[i + 30];
             }
+            OriginDecks[4][0] = WordStateOrigins[30];
+            OriginDecks[4][1] = WordStateOrigins[33];
+
+            OriginDecks[4][2] = WordStateOrigins[31];
+            OriginDecks[4][3] = WordStateOrigins[30];
+            OriginDecks[4][4] = WordStateOrigins[34];
+
+            OriginDecks[4][5] = WordStateOrigins[32];
+            OriginDecks[4][6] = WordStateOrigins[30];
+            OriginDecks[4][7] = WordStateOrigins[30];
+            OriginDecks[4][8] = WordStateOrigins[35];
         }
     }
 }

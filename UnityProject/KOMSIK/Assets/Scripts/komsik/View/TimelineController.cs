@@ -31,5 +31,9 @@ namespace KOMSIK
         {
             AudioView.Instance.PlayBGM(AudioView.BGM.Sea);
         }
+        public void BGMPlayYusha()
+        {
+            AudioView.Instance.PlayBGM(AudioView.BGM.Yusha);
+        }
     }
 }
