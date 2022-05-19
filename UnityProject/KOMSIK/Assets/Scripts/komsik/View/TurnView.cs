@@ -24,16 +24,16 @@ namespace KOMSIK
         private void DoSubscribe(GameSystem gameSystem)
         {
             gameSystem.GameState.OnNowTurnValueChange
-                .Subscribe(x => _ = Open(gameSystem.GameState.LastTurn))
+                .Subscribe(x => Open(gameSystem.GameState.LastTurn))
                 .AddTo(gameObject);
 
             gameSystem.GameState.OnChangeGamePhase
                 .Where(x => x == GameState.GamePhase.Custom)
-                .Subscribe(x => _ = Open(gameSystem.GameState.LastTurn))
+                .Subscribe(x => Open(gameSystem.GameState.LastTurn))
                 .AddTo(gameObject);
         }
 
-        private async UniTask Open(int lastTurn)
+        private void Open(int lastTurn)
         {
             turnText.text = $"{lastTurn}";
             animator.SetTrigger(openAnimatorTrigger);

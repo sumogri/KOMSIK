@@ -107,7 +107,6 @@ namespace KOMSIK
 
             /// –¡•û‰Šú‰».
             SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
-            //SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Sea));
 
             //“G‚Ì‰Šú‰».
             enemyState.Value.InitFromOring(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));

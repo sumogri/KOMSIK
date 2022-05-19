@@ -33,7 +33,7 @@ namespace KOMSIK
         }
         public void BGMPlayYusha()
         {
-            AudioView.Instance.PlayBGM(AudioView.BGM.Yusha);
+            AudioView.Instance.PlayBGM(AudioView.BGM.Title);
         }
     }
 }

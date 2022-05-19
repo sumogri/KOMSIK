@@ -12,6 +12,8 @@ namespace KOMSIK
         [SerializeField] private GameState.GamePhase gamePhase;
         [SerializeField] private int numOfPhase; //Ptetalk[num]
         [SerializeField] private PlayableDirector timeline;
+        [SerializeField] private bool isUseSection = false;
+        [SerializeField] private GameState.Section gameSection;
 
         public void Start()
         {
@@ -20,11 +22,21 @@ namespace KOMSIK
 
         public void DoSubscribe(GameSystem gameSystem)
         {
-            gameSystem.GameState.OnChangeGamePhase
-                .Do(x => Debug.Log($"{x} == {gamePhase} && {gameSystem.GameState.PhaseIterateTime} == {numOfPhase}"))
-                .Where(x => x == gamePhase && gameSystem.GameState.PhaseIterateTime == numOfPhase)
-                .Subscribe(_ => OnChangeGamePhase())
-                .AddTo(gameObject);
+            if (isUseSection)
+            {
+                gameSystem.GameState.OnChangeGameSection
+                    .Where(x => x == gameSection)
+                    .Subscribe(_ => timeline.Play())
+                    .AddTo(gameObject);
+            }
+            else
+            {
+                gameSystem.GameState.OnChangeGamePhase
+                    .Do(x => Debug.Log($"{x} == {gamePhase} && {gameSystem.GameState.PhaseIterateTime} == {numOfPhase}"))
+                    .Where(x => x == gamePhase && gameSystem.GameState.PhaseIterateTime == numOfPhase)
+                    .Subscribe(_ => OnChangeGamePhase())
+                    .AddTo(gameObject);
+            }
         }
 
         private void OnChangeGamePhase()

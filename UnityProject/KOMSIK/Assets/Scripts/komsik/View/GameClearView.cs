@@ -17,7 +17,7 @@ namespace KOMSIK
         // Start is called before the first frame update
         void Start()
         {
-            DoSubscribe(GameManager.GameSystem);
+            //DoSubscribe(GameManager.GameSystem);
             cotinueButton.onClick.AddListener(() => OnPressCotinue());
         }
 
@@ -56,6 +56,7 @@ namespace KOMSIK
         public void OnPressCotinue()
         {
             GameManager.GameSystem.Continue();
+            contentRoot.SetActive(false);
         }
     }
 }

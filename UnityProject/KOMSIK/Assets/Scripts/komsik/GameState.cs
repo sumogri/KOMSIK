@@ -34,7 +34,7 @@ namespace KOMSIK
         {
             this.maxTurn.Value = maxTurn;
             this.customPoint.Value = customPoint;
-            this.nowSection.Value = Section.PreMovie;
+            this.nowSection.Value = Section.PreMovie; 
             this.nowGamePhase.Value = GamePhase.None;
             this.phaseIterateTime.Value = 0;
         }
@@ -64,6 +64,7 @@ namespace KOMSIK
             Game,
             BadEnd,
             GoodEnd,
+            NormalEnd,
         }
 
         public void AddCustomPoint(int adder)

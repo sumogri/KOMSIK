@@ -19,7 +19,7 @@ namespace KOMSIK
         {
             DoSubscribe(GameManager.GameSystem);
             //デバッグ.
-            GameManager.GameSystem.GameState.ChangeSection(GameState.Section.Title);
+            //GameManager.GameSystem.GameState.ChangeSection(GameState.Section.Title);
         }
         
         public void DoSubscribe(GameSystem gameSystem)
