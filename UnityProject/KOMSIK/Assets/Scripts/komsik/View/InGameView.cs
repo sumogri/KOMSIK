@@ -41,6 +41,11 @@ namespace KOMSIK
 
             resetButton.onClick.AddListener(() =>
             {
+                if(gameSystem.GameState.NowGamePhase == GameState.GamePhase.Battle)
+                {
+                    return; //バトル中はスキップ無視.
+                }
+
                 gameSystem.Continue();
                 AudioView.Instance.PlayBGM(AudioView.BGM.Title);
             });

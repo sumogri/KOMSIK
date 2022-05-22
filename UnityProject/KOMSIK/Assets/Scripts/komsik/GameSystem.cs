@@ -30,6 +30,7 @@ namespace KOMSIK
         /// </summary>
         public WordState[] EnemyChosenWordStateChache => enemyChosenWordStateChache;
         public GameState GameState => gameState.Value;
+        public PlaySpeed NowPlaySpeed => battlePlaySpeedKind;
         #endregion
 
         #region event
@@ -55,6 +56,8 @@ namespace KOMSIK
 
         private PowerState ownPower;
         private PowerState enemeyPower;
+        private int batlleDelayMillSec = 1000;
+        private PlaySpeed battlePlaySpeedKind = PlaySpeed.Normal;
 
         public GameSystem()
         {
@@ -204,12 +207,12 @@ namespace KOMSIK
         public async UniTask BattleRun()
         {
             // てきとう.演出待ち
-            await UniTask.Delay(500);
+            await UniTask.Delay(batlleDelayMillSec);
 
             while (BattleTopWordDo())
             {
                 // てきとう.演出待ち.
-                await UniTask.Delay(500);
+                await UniTask.Delay(batlleDelayMillSec);
 
                 //ゲームオーバー判定.
                 if (CheckAndDoBattleEnd())
@@ -334,6 +337,30 @@ namespace KOMSIK
             wordState.SetFromOrigin(wordStateOrigin);
             GameState.PaidCustomPoint(cost);
             return true;
+        }
+
+        public void SetPlaySpeed(PlaySpeed playSpeed)
+        {
+            switch (playSpeed)
+            {
+                case PlaySpeed.Normal:
+                    batlleDelayMillSec = 1000;
+                    break;
+                case PlaySpeed.Midium:
+                    batlleDelayMillSec = 750;
+                    break;
+                case PlaySpeed.Quick:
+                    batlleDelayMillSec = 500;
+                    break;
+            }
+            battlePlaySpeedKind = playSpeed;
+        }
+
+        public enum PlaySpeed
+        {
+            Normal,
+            Midium,
+            Quick,
         }
     }
 }
