@@ -9,7 +9,7 @@ namespace KOMSIK
     public class CustomAreaView : MonoBehaviour
     {
         [SerializeField] private WordProvider[] wordProvider;
-        private bool detailActive = false;
+        private bool detailActive = true;
 
         public void Start()
         {

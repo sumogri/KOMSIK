@@ -14,13 +14,11 @@ namespace KOMSIK
         public void OnPointerEnter(PointerEventData eventData)
         {
             WordDetailView.Instance.OpenDetail(slotView.Model,side);
-            Debug.Log("Enter!");
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             WordDetailView.Instance.CloseDetail(slotView.Model);
-            Debug.Log("Exit!");
         }
     }
 }

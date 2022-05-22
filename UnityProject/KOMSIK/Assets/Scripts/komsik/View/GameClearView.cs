@@ -9,7 +9,8 @@ namespace KOMSIK
 {
     public class GameClearView : MonoBehaviour
     {
-        [SerializeField] private GameObject contentRoot;
+        [SerializeField] private GameObject normalEndcontentRoot;
+        [SerializeField] private GameObject goodEndContentRoot;
         [SerializeField] private Button cotinueButton;
 
         private bool requireContentDisactivate = false;
@@ -25,9 +26,15 @@ namespace KOMSIK
         {
             if (requireContentDisactivate)
             {
-                contentRoot.SetActive(false);
-                requireContentDisactivate = false;
+                Disable();
             }
+        }
+
+        private void Disable()
+        {
+            normalEndcontentRoot.SetActive(false);
+            goodEndContentRoot.SetActive(false);
+            requireContentDisactivate = false;
         }
 
         public void DoSubscribe(GameSystem gameSystem)
@@ -39,13 +46,23 @@ namespace KOMSIK
 
             gameSystem.GameState.OnChangeGameSection
                 .Where(x => x == GameState.Section.GoodEnd)
-                .Subscribe(_ => OnGameOver())
+                .Subscribe(_ => OnGameClearGood())
+                .AddTo(gameObject);
+
+            gameSystem.GameState.OnChangeGameSection
+                .Where(x => x == GameState.Section.NormalEnd)
+                .Subscribe(_ => OnGameClearNormal())
                 .AddTo(gameObject);
         }
 
-        public void OnGameOver()
+        public void OnGameClearGood()
         {
-            contentRoot.SetActive(true);
+            goodEndContentRoot.SetActive(true);
+            AudioView.Instance.PlayBGM(AudioView.BGM.Ending);
+        }
+        public void OnGameClearNormal()
+        {
+            normalEndcontentRoot.SetActive(true);
         }
 
         public void OnInit()
@@ -56,7 +73,10 @@ namespace KOMSIK
         public void OnPressCotinue()
         {
             GameManager.GameSystem.Continue();
-            contentRoot.SetActive(false);
+            AudioView.Instance.PlayBGM(AudioView.BGM.Title);
+
+            goodEndContentRoot.SetActive(false);
+            normalEndcontentRoot.SetActive(false);
         }
     }
 }

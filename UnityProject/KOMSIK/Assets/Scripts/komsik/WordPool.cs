@@ -6,6 +6,8 @@ namespace KOMSIK
 {
     public static class WordPool
     {
+        public static WordStateOrigin HolySaber { get { return WordStateOrigins[90]; } }
+
         public static WordStateOrigin[] WordStateOrigins { get; private set; }
 
         public static WordStateOrigin[][] OriginDecks { get; private set; }
@@ -162,6 +164,7 @@ namespace KOMSIK
             #endregion
 
             WordStateOrigins[90] = new WordStateOrigin("êπåïÇÊ", 9999, 9999, 0, 1);
+            WordStateOrigins[90].Effects.Add(new HolySaber());
             WordStateOrigins[99] = new WordStateOrigin("éÄÇÀ",10000, 100, 0, 0);
             WordStateOrigins[99].Effects.Add(new NormalAtkAndDef());
 

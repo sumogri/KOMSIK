@@ -13,7 +13,7 @@ namespace KOMSIK
         [SerializeField] private Button cutinBeginButton;
         [SerializeField] private Power power = Power.Own;
 
-        private bool detailActivate = false;
+        private bool detailActivate = true;
         private bool isCanCutin = true; // カットイン権が残っているか
         private bool isSlotined = false; // 何かしらワードがスロットに入っているか
 

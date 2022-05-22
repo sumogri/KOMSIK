@@ -60,6 +60,7 @@ namespace KOMSIK
         public void OnPressCotinue()
         {
             GameManager.GameSystem.Continue();
+            AudioView.Instance.PlayBGM(AudioView.BGM.Title);
         }
     }
 }

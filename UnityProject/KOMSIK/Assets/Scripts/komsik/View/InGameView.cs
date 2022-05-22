@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UniRx;
 using Cysharp.Threading.Tasks;
 
@@ -15,6 +16,8 @@ namespace KOMSIK
 
         [SerializeField] private GameObject[] ownCharaRoots;
         [SerializeField] private GameObject enemyCharaRoot;
+
+        [SerializeField] private Button resetButton;
 
 
         // Start is called before the first frame update
@@ -34,6 +37,21 @@ namespace KOMSIK
             gameSystem.GameState.OnChangeGamePhase
                 .Where(x => x == GameState.GamePhase.AftTalkBad || x == GameState.GamePhase.AftTalkGood)
                 .Subscribe(x => _ = OnBattleEnd())
+                .AddTo(gameObject);
+
+            resetButton.onClick.AddListener(() =>
+            {
+                gameSystem.Continue();
+                AudioView.Instance.PlayBGM(AudioView.BGM.Title);
+            });
+
+            gameSystem.OnInit
+                .Subscribe(x =>
+                {
+                    cameraRoot.SetActive(false);
+                    uiRoot.SetActive(false);
+                    stageRoot.SetActive(false);
+                })
                 .AddTo(gameObject);
         }
 

@@ -37,6 +37,7 @@ namespace KOMSIK
             this.nowSection.Value = Section.PreMovie; 
             this.nowGamePhase.Value = GamePhase.None;
             this.phaseIterateTime.Value = 0;
+            this.nowTurn.Value = 0;
         }
 
         public void InitOnBattle(int maxTurn, int customPoin)

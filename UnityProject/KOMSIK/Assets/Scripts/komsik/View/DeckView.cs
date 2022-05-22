@@ -13,7 +13,7 @@ namespace KOMSIK
         [SerializeField] private Power power;
 
         private WordDeck targetModel;
-        private bool detailActive = false;
+        private bool detailActive = true;
 
         public void DoSubscribe(WordDeck target)
         {

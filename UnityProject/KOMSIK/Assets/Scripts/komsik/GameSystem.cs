@@ -36,6 +36,7 @@ namespace KOMSIK
         public IObservable<WordState> OnWordDoEffect => onDoEffectWordSubject;
         public IObservable<Unit> OnSetupBattle => onSetupBattleSubject;
         public IObservable<BattleResult> OnBattleEnd => onButtleEndSubject;
+        public IObservable<Unit> OnInit => onInitSubject;
         #endregion
 
         private ReactiveProperty<GameState> gameState = new ReactiveProperty<GameState>(new GameState());
@@ -50,6 +51,7 @@ namespace KOMSIK
         private Subject<WordState> onDoEffectWordSubject = new Subject<WordState>();
         private Subject<Unit> onSetupBattleSubject = new Subject<Unit>();
         private Subject<BattleResult> onButtleEndSubject = new Subject<BattleResult>();
+        private Subject<Unit> onInitSubject = new Subject<Unit>();
 
         private PowerState ownPower;
         private PowerState enemeyPower;
@@ -102,8 +104,7 @@ namespace KOMSIK
         public void Init()
         {
             Debug.Log("Call Init");
-            gameState.Value.Init(10,3);
-            //gameState.Value.Init(10, 9);
+            gameState.Value.Init(10, 13);
 
             /// –¡•û‰Šú‰».
             SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
@@ -111,11 +112,12 @@ namespace KOMSIK
             //“G‚Ì‰Šú‰».
             enemyState.Value.InitFromOring(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));
             enemyWordDeck.SetDeckFromCharacter(enemyState.Value);
+            onInitSubject.OnNext(Unit.Default);
         }
 
         public void Continue()
         {
-            gameState.Value.InitOnBattle(10, 3);
+            gameState.Value.Init(10, 13);
 
             /// –¡•û‰Šú‰».
             SelectOwnCharacter(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Gran));
@@ -123,6 +125,7 @@ namespace KOMSIK
             //“G‚Ì‰Šú‰».
             enemyState.Value.InitFromOring(CharacterOrigin.GetOrigin(CharacterOrigin.CharacterID.Maou));
             enemyWordDeck.SetDeckFromCharacter(enemyState.Value);
+            onInitSubject.OnNext(Unit.Default);
 
             GameStart();
         }
@@ -229,7 +232,7 @@ namespace KOMSIK
         /// <returns>I—¹ğŒ‚ğ–‚½‚µ‚½‚©</returns>
         public bool CheckAndDoBattleEnd()
         {
-            if(EnemyState.HP <= 0 || OwnState.HP <= 0)
+            if(EnemyState.HP <= 0 || OwnState.HP <= 0 || GameState.NowSection != GameState.Section.Game)
             {
                 BattleEnd();
                 return true;
@@ -276,9 +279,14 @@ namespace KOMSIK
             {
                 PhaseChangeToDefeate();
             }
+            else if(gameState.Value.NowSection == GameState.Section.NormalEnd)
+            {
+                gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkGood);
+            }
             else
             {
                 gameState.Value.ChangeGamePhase(GameState.GamePhase.AftTalkGood);
+                gameState.Value.ChangeSection(GameState.Section.GoodEnd);
             }
         }
 

@@ -39,6 +39,7 @@ namespace KOMSIK
         public void StopBGM()
         {
             bgmSource.Pause();
+            bgmSource.clip = null;
         }
 
         public enum BGM 
@@ -47,6 +48,7 @@ namespace KOMSIK
             Sky,
             Sea,
             Yusha,
+            Ending,
         }
     }
 }

@@ -25,7 +25,7 @@ namespace KOMSIK
         // Start is called before the first frame update
         void Start()
         {
-            SetDetailActivate(false);
+            SetDetailActivate(true);
         }
 
         public void DoSubscribe(WordState wordState)
